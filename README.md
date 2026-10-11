@@ -5,7 +5,7 @@ A private game-night planner for friends. Create upcoming sessions, set the game
 ## Run locally
 
 1. Install Node.js 20 or newer.
-2. Create a Supabase project and run [`supabase/schema.sql`](./supabase/schema.sql) in its SQL Editor.
+2. Create a Supabase project. Open [`supabase/schema.sql`](./supabase/schema.sql), copy the SQL statements from the file, and run those statements in the Supabase SQL Editor. Do not paste the filename or Markdown link itself.
 3. Copy `.env.example` to `.env.local`.
 4. Set `SITE_PASSWORD` to a long, private crew password.
 5. Set `SESSION_SECRET` to a random value of at least 32 characters.
