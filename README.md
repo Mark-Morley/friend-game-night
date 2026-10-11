@@ -16,6 +16,6 @@ The app runs at http://localhost:3000. Only the private password gate is public;
 
 ## Deploy to Vercel
 
-Import this repository in Vercel, add the four environment variables above to the project settings, then deploy. Use the same Supabase database and SQL schema for production. Redeploy after changing environment variables.
+Import this repository in Vercel, then open **Project Settings → Environment Variables** and add `SITE_PASSWORD`, `SESSION_SECRET`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY`. Set them for **Production** (and **Preview** too if testing preview deployments); `.env.local` is only for local development and is not sent to Vercel when you push. Use a private password and a `SESSION_SECRET` of at least 32 characters. Use the server-side Supabase service-role/secret key for `SUPABASE_SERVICE_ROLE_KEY`, not the publishable/anon key. Use the same Supabase database and SQL schema for production. After saving the variables, redeploy the latest deployment.
 
 The shared-password screen is a friendly private-lobby gate, not individual accounts. Anyone who knows the password can access the lobby; use a unique password shared only with your friends.

@@ -157,7 +157,7 @@ export default function GameNightBoard() {
       <section className="content-grid" id="upcoming">
         <div className="sessions-column">
           <div className="section-heading">
-            <div><p className="eyebrow">THE LINEUP</p><h2>Upcoming sessions<span className="heading-period">.</span></h2></div>
+            <div><p className="eyebrow">THE LINEUP</p><h2>Game nights<span className="heading-period">.</span></h2></div>
             <span className="session-count">{nights.length.toString().padStart(2, "0")} SESSIONS</span>
           </div>
           {message && <p className="form-success" role="status">{message}</p>}
@@ -174,6 +174,7 @@ export default function GameNightBoard() {
             <div className="session-list">
               {nights.map((night, index) => {
                 const full = night.signups.length >= night.max_players;
+                const started = Date.parse(night.starts_at) <= Date.now();
                 return (
                   <article className="session-card" key={night.id}>
                     <div className="date-tile"><span>{formatDate(night.starts_at).split(",")[0]}</span><strong>{new Intl.DateTimeFormat(undefined, { day: "2-digit" }).format(new Date(night.starts_at))}</strong><small>{new Intl.DateTimeFormat(undefined, { month: "short" }).format(new Date(night.starts_at)).toUpperCase()}</small></div>
@@ -190,8 +191,8 @@ export default function GameNightBoard() {
                         <span className="spots">{night.signups.length}/{night.max_players} PLAYERS</span>
                       </div>
                     </div>
-                    <button className={`button signup-button${full ? " button-disabled" : " button-light"}`} onClick={() => void joinNight(night)} disabled={full || busyId === night.id}>
-                      {busyId === night.id ? "Saving..." : full ? "Full" : "Join in"} {!full && <span aria-hidden="true">↗</span>}
+                    <button className={`button signup-button${full || started ? " button-disabled" : " button-light"}`} onClick={() => void joinNight(night)} disabled={full || started || busyId === night.id}>
+                      {busyId === night.id ? "Saving..." : started ? "Started" : full ? "Full" : "Join in"} {!full && !started && <span aria-hidden="true">↗</span>}
                     </button>
                   </article>
                 );

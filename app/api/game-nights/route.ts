@@ -18,7 +18,6 @@ export async function GET(request: NextRequest) {
   const { data, error } = await getSupabase()
     .from("game_nights")
     .select("id, game, starts_at, platform, host_name, max_players, notes, signups(id, player_name)")
-    .gte("starts_at", new Date().toISOString())
     .order("starts_at", { ascending: true });
   if (error) {
     console.error("Could not load game nights:", error.message);
@@ -41,7 +40,7 @@ export async function POST(request: NextRequest) {
   const { game, startsAt, platform, hostName, maxPlayers, notes } = values as Record<string, unknown>;
   if (
     typeof game !== "string" || !game.trim() || game.length > 80 ||
-    typeof startsAt !== "string" || !Number.isFinite(Date.parse(startsAt)) || Date.parse(startsAt) <= Date.now() ||
+    typeof startsAt !== "string" || !Number.isFinite(Date.parse(startsAt)) ||
     typeof platform !== "string" || !platform.trim() || platform.length > 40 ||
     typeof hostName !== "string" || !hostName.trim() || hostName.length > 32 ||
     typeof maxPlayers !== "number" || !Number.isInteger(maxPlayers) || maxPlayers < 2 || maxPlayers > 32 ||
